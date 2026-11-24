@@ -13,6 +13,55 @@ from Quartz import (CGDataProviderCopyData, CGDisplayCreateImage, CGEventCreateM
                     kCGEventRightMouseUp, kCGEventSourceStateHIDSystemState, kCGHIDEventTap,
                     kCGMouseButtonCenter, kCGMouseButtonLeft, kCGMouseButtonRight, kCGMouseEventClickState)
 
+# ---------------------------------------------------------------------------
+# Workaround: pynput's macOS keyboard Listener calls keycode_context() from a
+# background thread (Listener._run). keycode_context() uses ctypes to call
+# Carbon/HIToolbox Text Input Source APIs (TISCopyCurrentKeyboardInputSource,
+# TISGetInputSourceProperty, …). On macOS 27+ those APIs carry a
+# dispatch_assert_queue() that requires the main dispatch queue, so a background
+# thread triggers EXC_BREAKPOINT (SIGTRAP) ~2 s after launch.
+#
+# pynput.keyboard._darwin imports keycode_context into its own namespace, so we
+# must patch that binding (and pynput._util.darwin's, for safety).
+#
+# We cache the keyboard context on the main thread at import time and serve the
+# cached value to background threads, avoiding any HIToolbox call off the main
+# queue. Keyboard layout essentially never changes during a session, so the
+# cached context is safe to reuse.
+# ---------------------------------------------------------------------------
+import contextlib as _contextlib
+import threading as _threading
+
+import pynput._util.darwin as _darwin_util
+import pynput.keyboard._darwin as _darwin_keyboard
+
+_cached_keyboard_context = None
+
+
+def _prime_keyboard_context():
+    global _cached_keyboard_context
+    with _darwin_util.keycode_context() as _ctx:
+        _cached_keyboard_context = _ctx
+
+
+_prime_keyboard_context()
+
+_orig_keycode_context = _darwin_util.keycode_context
+_main_thread_ident = _threading.main_thread().ident
+
+
+@_contextlib.contextmanager
+def _main_thread_safe_keycode_context():
+    if _threading.current_thread().ident == _main_thread_ident:
+        with _orig_keycode_context() as _ctx:
+            yield _ctx
+    else:
+        yield _cached_keyboard_context
+
+
+_darwin_util.keycode_context = _main_thread_safe_keycode_context
+_darwin_keyboard.keycode_context = _main_thread_safe_keycode_context
+
 _mouse, _keys = mouse.Controller(), keyboard.Controller()
 _source = CGEventSourceCreate(kCGEventSourceStateHIDSystemState)
 _BUTTONS = {"left": (kCGEventLeftMouseDown, kCGEventLeftMouseUp, kCGMouseButtonLeft),
