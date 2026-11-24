@@ -1,4 +1,4 @@
-"""The Macro Recorder window: recording, replaying and saving macros."""
+"""The Macroni window: recording, replaying and saving macros."""
 import queue
 import re
 import subprocess
@@ -36,7 +36,7 @@ class App(Screen, ctk.CTk):
     def __init__(self):
         super().__init__()
         ctk.set_appearance_mode("dark")
-        self.title("Macro Recorder")
+        self.title("Macroni")
         self.geometry("400x700")
         self.resizable(False, False)
         self.update_idletasks()
@@ -194,7 +194,7 @@ class App(Screen, ctk.CTk):
             return
         if osapi.target_needs_admin():
             self.set_status("The app in front is running as administrator. "
-                            "Run Macro Recorder as administrator too, then try again.")
+                            "Run Macroni as administrator too, then try again.")
             return
         self.brain = self.smart_brain if self.smart.get() else "exact"
         if self.brain == "plugin":
