@@ -1,5 +1,5 @@
 r"""
-self_test.py - one command that checks the three things Macro Recorder actually needs
+self_test.py - one command that checks the three things Macroni actually needs
 to work: taking a screenshot, sending clicks, and sending keys. Fully automatic -- it
 does not need you to click into Notepad or judge anything by eye. Just run it and send
 me the printed block at the end.
@@ -34,7 +34,7 @@ def run():
     results = {"screenshot": test_screenshot()}
 
     root = tk.Tk()
-    root.title("Macro Recorder self-test (closes itself)")
+    root.title("Macroni self-test (closes itself)")
     root.geometry("240x140+80+80")
     clicks = {"single": 0, "double": 0, "right": 0}
 
