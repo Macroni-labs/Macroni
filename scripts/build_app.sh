@@ -41,9 +41,14 @@ if [ ${#TCL_ARGS[@]} -eq 0 ]; then
   echo "exact error and I'll adjust this path."
 fi
 
-pyinstaller --noconfirm --windowed --name "Macroni" \
-  --osx-bundle-identifier com.macroni.app \
-  "${ICON_ARGS[@]}" "${TCL_ARGS[@]}" \
-  --paths . --collect-all customtkinter --collect-all cv2 scripts/launch.py
+# Build using the custom spec file (Macroni.spec). The spec:
+#   * collects PyObjC frameworks (Quartz, AppKit, CoreFoundation, HIServices)
+#     so pynput's macOS keyboard backend can import them
+#   * disables UPX compression because PyObjC bridge modules (_coregraphics,
+#     etc.) break under UPX -- PyInstaller cannot locate their PyInit_* entry
+#     points afterwards
+#   * launch.py adds the venv site-packages to sys.path so PyObjC is imported
+#     from its installed location, not from PyInstaller's bundle archive
+pyinstaller --noconfirm Macroni.spec "${TCL_ARGS[@]}"
 codesign --force --deep --sign - "dist/Macroni.app"
 echo "Done. Move dist/Macroni.app to Applications, then give it the three permissions."
