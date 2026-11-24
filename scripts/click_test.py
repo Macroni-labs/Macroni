@@ -1,5 +1,5 @@
 r"""
-click_test.py - checks, on your own Windows PC, whether Macro Recorder's OWN click code
+click_test.py - checks, on your own Windows PC, whether Macroni's OWN click code
 works -- not just pynput in general. It calls osapi.glide_to() and osapi.mouse_button(),
 the exact functions app.py uses to replay a macro, with the exact same arguments a real
 double-click replay would use (two separate clicks, click count 1 then 2).

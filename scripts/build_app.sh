@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Builds "Macro Recorder.app" into dist/. Run it from the project folder:  ./scripts/build_app.sh
+# Builds "Macroni.app" into dist/. Run it from the project folder:  ./scripts/build_app.sh
 #
 # One-time step, before the first build: turn scripts/icon_1024.png into the .icns
 # file macOS actually needs for an app icon. This uses iconutil, which ships with
@@ -41,9 +41,9 @@ if [ ${#TCL_ARGS[@]} -eq 0 ]; then
   echo "exact error and I'll adjust this path."
 fi
 
-pyinstaller --noconfirm --windowed --name "Macro Recorder" \
-  --osx-bundle-identifier com.macrorecorder.app \
+pyinstaller --noconfirm --windowed --name "Macroni" \
+  --osx-bundle-identifier com.macroni.app \
   "${ICON_ARGS[@]}" "${TCL_ARGS[@]}" \
   --paths . --collect-all customtkinter --collect-all cv2 scripts/launch.py
-codesign --force --deep --sign - "dist/Macro Recorder.app"
-echo "Done. Move dist/Macro Recorder.app to Applications, then give it the three permissions."
+codesign --force --deep --sign - "dist/Macroni.app"
+echo "Done. Move dist/Macroni.app to Applications, then give it the three permissions."

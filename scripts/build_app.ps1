@@ -1,4 +1,4 @@
-# Builds "Macro Recorder.exe" into dist\. Run it from the project folder:
+# Builds "Macroni.exe" into dist\. Run it from the project folder:
 #   .\scripts\build_app.ps1
 # Experimental: written and syntax-checked, but not yet run on a real Windows PC.
 $ErrorActionPreference = "Stop"
@@ -35,11 +35,11 @@ if ($tclArgs.Count -eq 0) {
     Write-Host "fails to open with a 'tcl9... not found' error, that's why."
 }
 
-pyinstaller --noconfirm --onefile --windowed --name "Macro Recorder" `
+pyinstaller --noconfirm --onefile --windowed --name "Macroni" `
     @iconArg @tclArgs --paths . --collect-all customtkinter --collect-all cv2 scripts\launch.py
 if ($LASTEXITCODE -ne 0) { throw "pyinstaller failed" }
 
-Write-Host "Done. The file is dist\Macro Recorder.exe"
+Write-Host "Done. The file is dist\Macroni.exe"
 Write-Host "No special permissions are needed to run it, unlike the Mac version."
 Write-Host "It is not signed, so Windows SmartScreen may warn the first time it runs."
 Write-Host "Click 'More info', then 'Run anyway' -- this is expected for an unsigned exe, not a bug."

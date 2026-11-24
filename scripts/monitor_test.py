@@ -1,6 +1,6 @@
 r"""
 monitor_test.py - for anyone with TWO OR MORE monitors. Reports how Windows describes
-your screen setup, so a future version of Macro Recorder can support Smart replay across
+your screen setup, so a future version of Macroni can support Smart replay across
 every monitor, not just the main one.
 
 This does not need you to judge anything by eye -- just run it and send me the output.

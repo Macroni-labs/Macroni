@@ -2,7 +2,7 @@ r"""
 scale_test.py - checks, on your own Windows PC, whether a screenshot's pixels line up
 with where clicks actually land. This matters because Windows display scaling (125%,
 150%, and so on) can make a window-size reading and a screenshot disagree about how big
-the screen is, in which case Macro Recorder would click the wrong spot even when it
+the screen is, in which case Macroni would click the wrong spot even when it
 correctly SEES the right button in a screenshot.
 
 Run it from the project folder, with the environment already set up:

@@ -5,9 +5,9 @@ import sys
 from pathlib import Path
 
 if sys.platform == "darwin":
-    APP_DIR = Path.home() / "Library" / "Application Support" / "MacroRecorder"
+    APP_DIR = Path.home() / "Library" / "Application Support" / "Macroni"
 elif sys.platform == "win32":
-    APP_DIR = Path(os.environ.get("APPDATA", Path.home())) / "MacroRecorder"
+    APP_DIR = Path(os.environ.get("APPDATA", Path.home())) / "Macroni"
 else:
     APP_DIR = Path.home() / ".macro-recorder"
 MACRO_DIR = APP_DIR / "macros"

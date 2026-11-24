@@ -36,14 +36,14 @@ class LearnMode:
                            keyboard.Listener(on_press=self._on_key)]
         for listener in self._listeners:
             listener.start()
-        self.app.title("Macro Recorder - learning")
+        self.app.title("Macroni - learning")
         self.app.set_status("Learning on. Fn+F7 pauses")
 
     def stop(self):
         self.active = False
         for listener in self._listeners:
             listener.stop()
-        self.app.title("Macro Recorder")
+        self.app.title("Macroni")
         self.app.set_status("Learning off")
 
     def stats(self):
@@ -63,7 +63,7 @@ class LearnMode:
     def _on_key(self, key):
         if key == keyboard.Key.f7:
             self.paused = not self.paused
-            self.app.ui(self.app.title, "Macro Recorder - learning" + (" (paused)" if self.paused else ""))
+            self.app.ui(self.app.title, "Macroni - learning" + (" (paused)" if self.paused else ""))
             self.app.ui(self.app.set_status, "Learning paused" if self.paused else "Learning resumed")
 
     def _on_move(self, x, y):
