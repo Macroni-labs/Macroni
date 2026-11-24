@@ -13,6 +13,19 @@ Macroni records your mouse clicks and keystrokes and replays them with one click
 </p>
 <p align="center"><sub>The main window and your saved macros</sub></p>
 
+## Contents
+
+- [How it works](#how-it-works)
+- [Features](#features)
+- [Install](#install) ([macOS](#macos) · [Windows](#windows))
+- [Usage](#usage)
+- [Smart replay options](#smart-replay-options)
+- [Privacy](#privacy)
+- [Testing on Windows](#testing-on-windows)
+- [Troubleshooting](#troubleshooting)
+- [Project structure](#project-structure)
+- [Known limits](#known-limits)
+
 ## How it works
 
 1. **Record.** For every click, it saves the click position and a small picture of what you clicked.
